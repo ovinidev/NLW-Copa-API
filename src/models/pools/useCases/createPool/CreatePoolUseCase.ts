@@ -1,4 +1,4 @@
-import { IPoolRepository } from "../../interfaces/IPoolRepository";
+import { IPoolRepository } from "../../../pools/interfaces/IPoolRepository";
 
 export class CreatePoolUseCase {
   constructor(private poolRepository: IPoolRepository) {}

@@ -13,8 +13,8 @@ export class PoolRepository implements IPoolRepository {
 
   async findPools(): Promise<IPoolData> {
     const pool = await prisma.pool.findMany();
-    const count = await prisma.pool.count();
+    const total = await prisma.pool.count();
 
-    return { pool, count };
+    return { pool, total };
   }
 }

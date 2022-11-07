@@ -1,9 +1,9 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-import { z } from "zod";
 import createPollController from "./models/pools/useCases/createPool";
 import findPoolsController from "./models/pools/useCases/findPools";
-import { prisma } from "./services/prismaClient";
+import createUserController from "./models/users/useCases/createUser";
+import findUsersController from "./models/users/useCases/findUsers";
 
 const fastify = Fastify({
   logger: true,
@@ -18,28 +18,11 @@ fastify.post("/pools", async (req, res) => {
 });
 
 fastify.get("/users", async (req, res) => {
-  const users = await prisma.user.findMany();
-  const usersCounter = await prisma.user.count();
-
-  return res.status(200).send({ users, usersCounter });
+  return findUsersController().handle(req, res);
 });
 
 fastify.post("/users", async (req, res) => {
-  const createUsersBody = z.object({
-    name: z.string(),
-    email: z.string(),
-  });
-
-  const { name, email } = createUsersBody.parse(req.body);
-
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-    },
-  });
-
-  res.status(201).send({ message: "User created" });
+  return createUserController().handle(req, res);
 });
 
 async function server() {
