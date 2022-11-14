@@ -18,7 +18,7 @@ export class CreatePoolController {
     try {
       await this.createPoolUseCase.execute(title, code);
 
-      res.status(200).send({ message: "Pool created" });
+      res.status(200).send({ code: code });
     } catch (err: any) {
       res.status(400).send(err.message);
     }
